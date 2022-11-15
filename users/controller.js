@@ -1,11 +1,10 @@
-const { response } = require("express")
 const pool = require("../db")
+const { getAllPlants } = require("./queries")
 
 const getUser = (req, res) => {
-  console.log("Getting user")
-  pool.query("SELECT * FROM accounts;", (error, results) => {
+  pool.query(getAllPlants, (error, results) => {
     if (error) throw error
-    response.status(200).json(results.rows)
+    res.status(200).json(results.rows)
   })
 }
 
