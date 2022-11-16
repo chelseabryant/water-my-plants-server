@@ -3,6 +3,6 @@ const controller = require("./controller")
 
 const router = Router()
 
-router.get("/", controller.getUser)
+router.post("/", controller.createAccount)
 
 module.exports = router

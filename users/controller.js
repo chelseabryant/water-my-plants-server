@@ -1,13 +1,12 @@
+const bcrypt = require("bcryptjs")
 const pool = require("../db")
-const { getAllPlants } = require("./queries")
 
-const getUser = (req, res) => {
-  pool.query(getAllPlants, (error, results) => {
-    if (error) throw error
-    res.status(200).json(results.rows)
-  })
+const createAccount = (req, res) => {
+  console.log("QWERT:::::::::", req.body)
+  // var salt = bcrypt.genSaltSync(10)
+  // var hash = bcrypt.hashSync(password, salt)
 }
 
 module.exports = {
-  getUser,
+  createAccount,
 }
