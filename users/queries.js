@@ -1,10 +1,10 @@
 const postUser = (name, email, password) => `
-INSERT INTO practice (name, email, password)
+INSERT INTO accounts (username, email, password)
 VALUES ('${name}', '${email}', '${password}')
-RETURNING user_id, name, email;
+RETURNING id, username, email;
 `
 const getUser = (email) => `
-SELECT * FROM practice
+SELECT * FROM accounts
 WHERE email = '${email}'
 `
 

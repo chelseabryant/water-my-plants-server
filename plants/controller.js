@@ -1,8 +1,13 @@
 const pool = require("../db")
-const { allPlants, plantById } = require("./queries")
+const {
+  ALL_PLANTS,
+  PLANT_BY_ID,
+  POST_MY_PLANT,
+  GET_MY_PLANTS,
+} = require("./queries")
 
 const getAllPlants = (req, res) => {
-  pool.query(allPlants, (error, results) => {
+  pool.query(ALL_PLANTS, (error, results) => {
     if (error) throw error
     res.status(200).json(results.rows)
   })
@@ -23,7 +28,21 @@ Results: If the query did not provide an error, a results array will be
     returned
 */
 const getPlantById = (req, res) => {
-  pool.query(plantById(req.params.id), (error, results) => {
+  pool.query(PLANT_BY_ID(req.params.id), (error, results) => {
+    if (error) throw error
+    res.status(200).json(results.rows)
+  })
+}
+
+const postMyPlant = (req, res) => {
+  pool.query(POST_MY_PLANT(req.body.user, req.body.plant), (error, results) => {
+    if (error) throw error
+    res.status(200).json(results.rows[0])
+  })
+}
+
+const getMyPlants = (req, res) => {
+  pool.query(GET_MY_PLANTS(req.query.user_id), (error, results) => {
     if (error) throw error
     res.status(200).json(results.rows)
   })
@@ -32,4 +51,6 @@ const getPlantById = (req, res) => {
 module.exports = {
   getAllPlants,
   getPlantById,
+  postMyPlant,
+  getMyPlants,
 }
