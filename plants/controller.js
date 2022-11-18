@@ -4,6 +4,7 @@ const {
   PLANT_BY_ID,
   POST_MY_PLANT,
   GET_MY_PLANTS,
+  ADDED_PLANTS,
 } = require("./queries")
 
 const getAllPlants = (req, res) => {
@@ -48,9 +49,20 @@ const getMyPlants = (req, res) => {
   })
 }
 
+const addedPlants = (req, res) => {
+  pool.query(
+    ADDED_PLANTS(req.query.user_id, req.query.plant_id),
+    (error, results) => {
+      if (error) throw error
+      res.status(200).json(results.rows)
+    }
+  )
+}
+
 module.exports = {
   getAllPlants,
   getPlantById,
   postMyPlant,
   getMyPlants,
+  addedPlants,
 }

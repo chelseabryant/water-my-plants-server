@@ -18,10 +18,15 @@ INNER JOIN plants
 ON my_plants.plant_id = plants.id
 WHERE my_plants.user_id = ${id}
 `
+const ADDED_PLANTS = (user, plant) => `
+SELECT * FROM my_plants
+WHERE user_id = ${user} AND plant_id = ${plant}
+`
 
 module.exports = {
   ALL_PLANTS,
   PLANT_BY_ID,
   POST_MY_PLANT,
   GET_MY_PLANTS,
+  ADDED_PLANTS,
 }
