@@ -9,7 +9,7 @@ router.get("/my-plants", controller.getMyPlants)
 
 router.post("/add-plant", controller.postMyPlant)
 
-router.get("/added-plants", controller.addedPlants)
+router.delete("/remove-plant", controller.deletePlant)
 
 router.get("/:id", controller.getPlantById)
 

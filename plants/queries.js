@@ -23,10 +23,16 @@ SELECT * FROM my_plants
 WHERE user_id = ${user} AND plant_id = ${plant}
 `
 
+const DELETE_PLANT = (user, plant) => `
+DELETE FROM my_plants
+WHERE user_id = '${user}' AND plant_id = '${plant}'
+`
+
 module.exports = {
   ALL_PLANTS,
   PLANT_BY_ID,
   POST_MY_PLANT,
   GET_MY_PLANTS,
   ADDED_PLANTS,
+  DELETE_PLANT,
 }

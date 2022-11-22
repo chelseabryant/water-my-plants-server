@@ -5,6 +5,7 @@ const {
   POST_MY_PLANT,
   GET_MY_PLANTS,
   ADDED_PLANTS,
+  DELETE_PLANT,
 } = require("./queries")
 
 const getAllPlants = (req, res) => {
@@ -29,10 +30,31 @@ Results: If the query did not provide an error, a results array will be
     returned
 */
 const getPlantById = (req, res) => {
-  pool.query(PLANT_BY_ID(req.params.id), (error, results) => {
-    if (error) throw error
-    res.status(200).json(results.rows)
-  })
+  if (req.query.user_id) {
+    pool.query(PLANT_BY_ID(req.params.id), (error, results) => {
+      if (error) throw error
+      pool.query(
+        ADDED_PLANTS(req.query.user_id, results.rows[0].id),
+        (insideError, insideResults) => {
+          if (insideError) throw insideError
+          if (insideResults.rows.length) {
+            res
+              .status(200)
+              .json({ plant_details: results.rows, added_plant: true })
+          } else {
+            res
+              .status(200)
+              .json({ plant_details: results.rows, added_plant: false })
+          }
+        }
+      )
+    })
+  } else {
+    pool.query(PLANT_BY_ID(req.params.id), (error, results) => {
+      if (error) throw error
+      res.status(200).json({ plant_details: results.rows, added_plant: false })
+    })
+  }
 }
 
 const postMyPlant = (req, res) => {
@@ -49,14 +71,11 @@ const getMyPlants = (req, res) => {
   })
 }
 
-const addedPlants = (req, res) => {
-  pool.query(
-    ADDED_PLANTS(req.query.user_id, req.query.plant_id),
-    (error, results) => {
-      if (error) throw error
-      res.status(200).json(results.rows)
-    }
-  )
+const deletePlant = (req, res) => {
+  pool.query(DELETE_PLANT(req.body.user, req.body.plant), (error, results) => {
+    if (error) throw error
+    res.status(200).json(results.rows)
+  })
 }
 
 module.exports = {
@@ -64,5 +83,5 @@ module.exports = {
   getPlantById,
   postMyPlant,
   getMyPlants,
-  addedPlants,
+  deletePlant,
 }

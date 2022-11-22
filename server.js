@@ -7,6 +7,7 @@ const cors = require("cors")
 const app = next({ dev: true })
 const userRoutes = require("./users/routes")
 const plantRoutes = require("./plants/routes")
+const calendarRoutes = require("./calendar/routes")
 
 app
   .prepare()
@@ -18,6 +19,7 @@ app
 
     server.use("/a/plants", plantRoutes)
     server.use("/a/users", userRoutes)
+    server.use("/a/calendar", calendarRoutes)
 
     server.listen(8080, () => {
       console.log("Server started on port 8080")
