@@ -1,5 +1,5 @@
 const GET_CALENDAR_INFO = (id) => `
-SELECT * FROM calendar
+SELECT * FROM calendar_event
 WHERE user_id = ${id}
 `
 
