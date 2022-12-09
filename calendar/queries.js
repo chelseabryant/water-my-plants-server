@@ -7,5 +7,11 @@ INSERT INTO calendar_event (user_id, title, start_date, end_date, notes, plant_i
 VALUES ('${user}', '${action}', '${start}', '${end}', '${notes}', '${plants}')
 RETURNING *
 `
+const PUT_PLANT_IDS = (user, event, plants) => `
+UPDATE calendar_event
+SET plant_ids = '${plants}'
+WHERE user_id = '${user}' AND id = '${event}'
+RETURNING *
+`
 
-module.exports = { GET_CALENDAR_EVENTS, POST_EVENT }
+module.exports = { GET_CALENDAR_EVENTS, POST_EVENT, PUT_PLANT_IDS }

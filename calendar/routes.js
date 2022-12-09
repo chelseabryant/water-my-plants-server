@@ -7,4 +7,6 @@ router.get("/", controller.getCalendarEvents)
 
 router.post("/post-event", controller.postEvent)
 
+router.put("/update-plant-ids", controller.putPlantIds)
+
 module.exports = router
