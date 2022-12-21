@@ -13,5 +13,11 @@ SET plant_ids = '${plants}'
 WHERE user_id = '${user}' AND id = '${event}'
 RETURNING *
 `
+const PUT_NOTES = (user, event, notes) => `
+UPDATE calendar_event
+SET notes = '${notes}'
+WHERE user_id = '${user}' AND id = '${event}'
+RETURNING *
+`
 
-module.exports = { GET_CALENDAR_EVENTS, POST_EVENT, PUT_PLANT_IDS }
+module.exports = { GET_CALENDAR_EVENTS, POST_EVENT, PUT_PLANT_IDS, PUT_NOTES }

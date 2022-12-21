@@ -1,5 +1,10 @@
 const pool = require("../db")
-const { GET_CALENDAR_EVENTS, POST_EVENT, PUT_PLANT_IDS } = require("./queries")
+const {
+  GET_CALENDAR_EVENTS,
+  POST_EVENT,
+  PUT_PLANT_IDS,
+  PUT_NOTES,
+} = require("./queries")
 
 const getCalendarEvents = (req, res) => {
   pool.query(GET_CALENDAR_EVENTS(req.query.user_id), (error, results) => {
@@ -35,4 +40,14 @@ const putPlantIds = (req, res) => {
   )
 }
 
-module.exports = { getCalendarEvents, postEvent, putPlantIds }
+const putNotes = (req, res) => {
+  pool.query(
+    PUT_NOTES(req.body.user, req.body.event, req.body.notes),
+    (error, results) => {
+      if (error) throw error
+      res.status(200).json(results.rows[0])
+    }
+  )
+}
+
+module.exports = { getCalendarEvents, postEvent, putPlantIds, putNotes }
